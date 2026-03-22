@@ -1,6 +1,6 @@
 <?php
     session_start();
-    require_once '../model/connessione.php';
+    require_once '../model/connessioneDB.php';
     require_once '../model/Vino.php';
 
     // 1. Controllo Sicurezza Sessione
