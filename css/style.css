@@ -1,3 +1,38 @@
+/* --- IL CONTENITORE: UN CERCHIO PERFETTO --- */
+.wine-thumb-container {
+    width: 65px; /* Dimensioni fisse per garantire un cerchio */
+    height: 65px;
+    min-width: 65px; /* Impedisce che si schiacci in layout flex */
+
+    border: 1px solid #eeeae3; /* Bordo sottile come nell'immagine */
+    border-radius: 50%; /* Rende il contenitore tondo */
+
+    background-color: #fff; /* Sfondo bianco per riempire lo spazio se la foto è stretta */
+
+    /* Centramento perfetto del contenuto */
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    overflow: hidden; /* Taglia l'immagine se esce dal cerchio */
+    margin-right: 20px; /* Spazio a destra verso il testo */
+}
+
+/* --- L'IMMAGINE ALL'INTERNO: INTERA E CENTRATA --- */
+.wine-thumb {
+    /* L'immagine occupa al massimo lo spazio del cerchio */
+    max-width: 100%;
+    max-height: 100%;
+
+    /* FONDAMENTALE: Object-fit: contain ridimensiona l'immagine per farla entrare
+       INTERAMENTE nel cerchio, senza tagliarla e senza zoomarla.
+       Mantiene le proporzioni originali. Se la foto è orizzontale,
+       vedrai dello spazio bianco sopra e sotto. */
+    object-fit: contain;
+
+    display: block;
+    margin: auto; /* Centramento extra se non flex */
+}
 /* --- RESET E BASI --- */
 * { box-sizing: border-box; }
 
@@ -206,30 +241,6 @@ footer { text-align: center; padding: 50px; color: #999; font-size: 0.75rem; tex
     transform: translateY(-1px);
 }
 
-/* Il contenitore che crea il cerchio e il bordo */
-.wine-thumb-container {
-    width: 120px;  /* Puoi aumentare o diminuire questa dimensione se serve */
-    height: 120px;
-    border-radius: 50%; /* Cerchio perfetto */
-    border: 1px solid #eeeae3; /* Il bordino sottile */
-    background-color: #fff; /* Sfondo bianco puro */
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    overflow: hidden; /* Taglia l'immagine se esce dal cerchio */
-    padding: 8px; /* Crea uno stacco elegante tra la bottiglia e il bordo del cerchio */
-    margin: 0 auto;
-}
-
-/* L'immagine dentro il cerchio */
-.wine-thumb {
-    max-width: 100%;
-    max-height: 100%;
-    object-fit: contain; /* FONDAMENTALE: fa vedere TUTA la bottiglia senza tagliarla, aggiungendo spazi bianchi se serve */
-    background-color: transparent;
-    width: auto; /* Permette all'immagine di stringersi se la bottiglia è snella */
-    height: auto; /* Permette all'immagine di abbassarsi se la bottiglia è tozza */
-}
 /* --- COLORI DORATI E SALUTO --- */
 
 /* --- inizio galleria lista vini -- */
