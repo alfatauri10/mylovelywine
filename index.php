@@ -29,10 +29,7 @@
     </head>
     <body>
         <?php include 'view/listaViniVetrina.php'; ?>
-
-        <footer style="text-align: center; padding: 40px; color: #bbb; font-size: 0.8rem;">
-            &copy; <?php echo date('Y'); ?> My Lovely Wine - Community per Enofili
-        </footer>
+        <?php include 'include/header.php'; ?>
 
     </body>
 </html>

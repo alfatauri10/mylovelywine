@@ -49,8 +49,7 @@ $utente = $_SESSION['username'] ?? 'Utente';
                           $nascondiAutore = true; 
                           $mostraElimina = true; 
 
-                          // Includiamo il file che abbiamo creato prima
-                          include 'dettagliVino.php'; 
+                          include 'dettagliVino.php';
                       ?>
                   <?php endforeach; ?>
               </div>
@@ -66,4 +65,4 @@ $utente = $_SESSION['username'] ?? 'Utente';
       </footer>
 
   </body>
-</html>
+</html>
