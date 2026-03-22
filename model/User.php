@@ -5,7 +5,11 @@
  * Registra un nuovo utente con il ruolo USER (ID 3)
  */
 function registraUtente($conn, $nome, $cognome, $username, $email, $password) {
-    
+
+    /* RENDO LE INSERT NELLE TABELLE Utenti e Utenti_Ruoli TRANSAZIONALI:
+     *  Se fallisce una delle due --> faccio il rollback anche dell'altra
+     *  --> o  tutto o niente
+    */
     $conn->autocommit(FALSE);
     $conn->begin_transaction();
 
@@ -38,7 +42,7 @@ function registraUtente($conn, $nome, $cognome, $username, $email, $password) {
         // 5. Ora il rollback funzionerà perché l'eccezione viene catturata
         $conn->rollback();
         $conn->autocommit(TRUE);
-        // echo $e->getMessage(); // Opzionale per debug
+        // echo $e->getMessage(); // per debug
         return false;
     }
 }
@@ -52,6 +56,6 @@ function findUserByUsername($conn, $username) {
     $stmt->bind_param("s", $username);
     $stmt->execute();
     
-    $result = $stmt->get_result(); // Necessario con MySQLi per ottenere i dati
+    $result = $stmt->get_result();
     return $result->fetch_assoc();
-}
+}

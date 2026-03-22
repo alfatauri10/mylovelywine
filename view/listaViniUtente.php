@@ -1,10 +1,10 @@
 <?php
-// view/listaVini.php
-session_start();
-include '../include/header.php';
-require_once '../controller/listaViniController.php';
+    // view/listaViniUtente.php
+    session_start();
+    include '../include/header.php';
+    require_once '../controller/listaViniController.php';
 
-$utente = $_SESSION['username'] ?? 'Utente';
+    $utente = $_SESSION['username'] ?? 'Utente';
 ?>
 
 <!DOCTYPE html>

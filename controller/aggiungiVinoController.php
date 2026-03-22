@@ -29,7 +29,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
     if ($res) {
         $_SESSION['messaggio'] = "Vino aggiunto con successo!";
-        header("Location: ../view/listaVini.php"); // Redirect al SUCCESSO
+        header("Location: ../view/listaViniUtente.php"); // Redirect al SUCCESSO
         exit(); // FERMA TUTTO QUI
     } else {
         // Se il Model non ha già impostato un errore specifico (es. nel catch), mettiamo quello generico
@@ -42,5 +42,5 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 }
 
 // Se qualcuno prova ad accedere al controller senza POST (es. via URL), lo rimandiamo alla lista
-header("Location: ../view/listaVini.php");
-exit();
+header("Location: ../view/listaViniUtente.php");
+exit();

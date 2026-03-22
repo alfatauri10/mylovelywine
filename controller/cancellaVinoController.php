@@ -24,14 +24,14 @@
 
       if ($res) {
           $_SESSION['messaggio'] = "Vino rimosso correttamente.";
-          header("Location: ../view/listaVini.php?msg=deleted");
+          header("Location: ../view/listaViniUtente.php?msg=deleted");
       } else {
 		$_SESSION['errore'] = "Impossibile eliminare il vino.";
-    	header("Location: ../view/listaVini.php?msg=error");
+    	header("Location: ../view/listaViniUtente.php?msg=error");
     	exit();      
       }
   }
 
  // Se qualcuno prova ad accedere al controller senza POST (es. via URL), lo rimandiamo alla lista
-  header("Location: ../view/listaVini.php");
-  exit();
+  header("Location: ../view/listaViniUtente.php");
+  exit();

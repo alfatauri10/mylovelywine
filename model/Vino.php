@@ -29,7 +29,12 @@
    */
 
   function aggiungiVino($conn, $id_utente, $nome_vino, $cantina, $anno, $prezzo, $copertina_vino_file_php, $galleria_vino_files_php) {
-    
+
+      /* RENDO LE INSERT NELLE TABELLE Vini_Utenti e Immagini_Vini TRANSAZIONALI:
+       *  Se fallisce una delle due --> faccio il rollback anche dell'altra
+       *  --> o  tutto o niente
+      */
+
     // 1. Inizio Transazione
     $conn->autocommit(FALSE);
     $conn->begin_transaction();
@@ -297,4 +302,4 @@
    
   
 
- 
+ 
