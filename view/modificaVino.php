@@ -1,16 +1,25 @@
 <?php
-session_start();
-require_once '../include/connessioneDB.php';
-require_once '../model/Vino.php';
+    session_start();
+    require_once '../include/connessioneDB.php';
+    require_once '../model/Vino.php';
 
-$id_utente = $_SESSION['id_utente'];
-$id_vino = filter_input(INPUT_GET, 'id', FILTER_SANITIZE_NUMBER_INT);
+    // 1. Controllo Sicurezza Sessione
+    if (!isset($_SESSION['id_utente'])) {
+        header("Location: ../view/login.php");
+        exit();
+    }
 
-// Recupero dati vino e galleria
-$vino = getVinoByIdDB($conn, $id_vino, $id_utente);
-$galleria = getGalleriaVinoDB($conn, $id_vino);
+    $id_utente = $_SESSION['id_utente'];
+    $id_vino = filter_input(INPUT_GET, 'id', FILTER_SANITIZE_NUMBER_INT);
 
-if (!$vino) { header("Location: listaViniUtente.php"); exit(); }
+    // Recupero dati vino e galleria
+    $vino = getVinoByIdDB($conn, $id_vino, $id_utente);
+    $galleria = getGalleriaCompletaVinoDB($conn, $id_vino);
+
+    if (!$vino) {
+        header("Location: listaViniUtente.php");
+        exit();
+    }
 ?>
 
 <!DOCTYPE html>
@@ -70,7 +79,7 @@ if (!$vino) { header("Location: listaViniUtente.php"); exit(); }
                         <?php foreach ($galleria as $foto): ?>
                             <div class="col-md-4">
                                 <div class="card p-2 border shadow-sm">
-                                    <img src="../<?php echo $foto['url_foto']; ?>" class="img-fluid mb-2" style="height: 120px; object-fit: cover;">
+                                    <img src="../<?php echo $foto['url']; ?>" class="img-fluid mb-2" style="height: 120px; object-fit: cover;">
                                     <div class="d-flex flex-column gap-2">
                                         <input type="file" name="sostituisci_foto[<?php echo $foto['id']; ?>]" class="form-control form-control-sm">
                                         <div class="form-check">
