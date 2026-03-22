@@ -1,11 +1,11 @@
 <?php
-// Rilevamento posizione
-$currentFile = basename($_SERVER['PHP_SELF']);
-$inViewFolder = (strpos($_SERVER['PHP_SELF'], '/view/') !== false);
+    // Rilevamento posizione
+    $currentFile = basename($_SERVER['PHP_SELF']);
+    $inViewFolder = (strpos($_SERVER['PHP_SELF'], '/view/') !== false);
 
-// Variabili di percorso universali
-$root = $inViewFolder ? '../' : '';
-$viewDir = $inViewFolder ? '' : 'view/';
+    // Variabili di percorso universali
+    $root = $inViewFolder ? '../' : '';
+    $viewDir = $inViewFolder ? '' : 'view/';
 ?>
 
 <header class="main-header">

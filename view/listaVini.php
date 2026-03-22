@@ -60,9 +60,7 @@ $utente = $_SESSION['username'] ?? 'Utente';
           </div>
       </div>
 
-      <footer style="padding: 30px 0; border-top: 1px solid #f2f0eb; text-align: center; color: #ccc; font-size: 0.8rem;">
-          &copy; <?php echo date('Y'); ?> My Lovely Wine
-      </footer>
+      <?php include '../include/footer.php'; ?>
 
   </body>
 </html>
