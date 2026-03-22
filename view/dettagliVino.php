@@ -25,35 +25,43 @@
                 <span><?php echo date('d/m/Y', strtotime($vino['created_at'])); ?></span>
             <?php endif; ?>
 
-            <div style="display: flex; gap: 10px; justify-content: flex-end; margin-top: 5px;">
-                <!--
-                // <?php if (isset($mostraModifica) && $mostraModifica): ?>
+            <?php if (isset($mostraAzioni) && $mostraAzioni): ?>
+                <div class="wine-actions" style="margin-top: 10px; display: flex; flex-direction: column; gap: 5px;">
+
+                    <!--
                     <a href="modificaVino.php?id=<?php echo $vino['id']; ?>"
-                       style="color: #a67c52; text-decoration: none; font-size: 0.7rem; font-weight: 500; text-transform: uppercase; border: 1px solid #eeeae3; padding: 5px 10px; display: inline-block;">
+                       style="color: #a67c52; text-decoration: none; font-size: 0.65rem; font-weight: 500; text-transform: uppercase; border: 1px solid #eeeae3; padding: 4px 8px; text-align: center;">
                         Modifica
                     </a>
-                // <?php endif; ?>
-                -->
-                <?php if (isset($mostraElimina) && $mostraElimina): ?>
-                <!--
-                    <a href="../controller/cancellaVinoController.php?id=<?php echo $vino['id']; ?>"
-                       style="color: #d9534f; text-decoration: none; font-size: 0.7rem; font-weight: 500; text-transform: uppercase; border: 1px solid #f8d7da; padding: 5px 10px; display: inline-block;"
-                       onclick="return confirm('Elimino questo vino?')">
-                        Elimina
-                    </a>
-                -->
+                    -->
+
                     <a href="cancellaVino.php?id=<?php echo $vino['id']; ?>&nome=<?php echo urlencode($vino['nome_vino']); ?>"
-                       style="color: #a67c52; text-decoration: none; font-size: 0.7rem; font-weight: 500; text-transform: uppercase; border: 1px solid #eeeae3; padding: 5px 10px; display: inline-block;">
+                       style="color: #d9534f; text-decoration: none; font-size: 0.65rem; font-weight: 500; text-transform: uppercase; border: 1px solid #f8d7da; padding: 4px 8px; text-align: center;">
                         Elimina
                     </a>
-                <?php endif; ?>
-            </div>
+                </div>
+            <?php endif; ?>
         </div>
     </div>
 
     <div class="wine-footer-details">
         <details class="wine-details">
             <summary>Note di degustazione & Gallery</summary>
+            <div class="gallery-story">
+                <?php if (!empty($vino['galleria'])): ?>
+                    <?php foreach ($vino['galleria'] as $index => $foto): ?>
+                        <div class="story-step">
+                            <img src="../<?php echo $foto['url']; ?>" class="step-img">
+                            <div class="step-content">
+                                <h6>Fase <?php echo $index + 1; ?></h6>
+                                <p>Descrizione del passaggio...</p>
+                            </div>
+                        </div>
+                    <?php endforeach; ?>
+                <?php else: ?>
+                    <p class="empty-msg">Nessun dettaglio extra presente.</p>
+                <?php endif; ?>
+            </div>
         </details>
     </div>
 </div>
