@@ -1,11 +1,17 @@
 <?php
-    session_start();
     require_once '../include/connessioneDB.php';
     require_once '../model/Vino.php';
 
-    // 1. Controllo Sicurezza Sessione
-    if (!isset($_SESSION['id_utente'])) {
-        header("Location: ../view/login.php");
+    // session_start() va SEMPRE all'inizio, prima di ogni logica
+    if (session_status() === PHP_SESSION_NONE) {
+        session_start();
+    }
+
+    // Recuperiamo l'ID dell'utente dalla sessione
+    $id_utente = $_SESSION['user_id'] ?? null;
+
+    if (!$id_utente) {
+        header("Location: login.php");
         exit();
     }
 
