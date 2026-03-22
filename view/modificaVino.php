@@ -1,6 +1,6 @@
 <?php
 session_start();
-require_once '../model/connessioneDB.php';
+require_once '../include/connessioneDB.php';
 require_once '../model/Vino.php';
 
 $id_utente = $_SESSION['id_utente'];
