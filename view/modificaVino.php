@@ -1,15 +1,17 @@
 <?php
     session_start();
+
     require_once '../include/connessioneDB.php';
     require_once '../model/Vino.php';
 
-    // 1. Controllo Sicurezza Sessione
-    if (!isset($_SESSION['id_utente'])) {
-        header("Location: ../view/login.php");
+    // Controllo se l'utente è loggato
+    if (!isset($_SESSION['user_id'])) {
+        header("Location: login.php");
         exit();
     }
 
-    $id_utente = $_SESSION['id_utente'];
+
+    $id_utente = $_SESSION['user_id'];
     $id_vino = filter_input(INPUT_GET, 'id', FILTER_SANITIZE_NUMBER_INT);
 
     // Recupero dati vino e galleria
