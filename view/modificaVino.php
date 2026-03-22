@@ -74,13 +74,13 @@ unset($_SESSION['errore']);
                 <div class="col-md-6">
                     <div class="form-group text-start">
                         <label class="form-label-custom">Anno</label>
-                        <input type="number" name="anno" class="form-control-custom" value="<?php echo $vino['anno']; ?>" required min="1900" max="2099">
+                        <input type="number" name="anno" class="form-control-custom" value="<?php echo $vino['anno']; ?>" min="1900" max="2099">
                     </div>
                 </div>
                 <div class="col-md-6">
                     <div class="form-group text-start">
                         <label class="form-label-custom">Prezzo (€)</label>
-                        <input type="text" name="prezzo" class="form-control-custom" value="<?php echo number_format($vino['prezzo'], 2, '.', ''); ?>" required>
+                        <input type="text" name="prezzo" class="form-control-custom" value="<?php echo number_format($vino['prezzo'], 2, '.', ''); ?>">
                     </div>
                 </div>
             </div>
