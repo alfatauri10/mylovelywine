@@ -206,26 +206,29 @@ footer { text-align: center; padding: 50px; color: #999; font-size: 0.75rem; tex
     transform: translateY(-1px);
 }
 
-//* Il contenitore fa da "maschera" circolare */
+/* Il contenitore che crea il cerchio e il bordo */
 .wine-thumb-container {
-    width: 100px;
-    height: 100px;
-    border-radius: 50%; /* Il cerchio lo fa lui */
-    border: 1px solid #eeeae3;
-    background-color: #fff;
+    width: 120px;  /* Puoi aumentare o diminuire questa dimensione se serve */
+    height: 120px;
+    border-radius: 50%; /* Cerchio perfetto */
+    border: 1px solid #eeeae3; /* Il bordino sottile */
+    background-color: #fff; /* Sfondo bianco puro */
     display: flex;
     align-items: center;
     justify-content: center;
-    overflow: hidden; /* Taglia l'immagine se esce dai bordi del cerchio */
+    overflow: hidden; /* Taglia l'immagine se esce dal cerchio */
+    padding: 8px; /* Crea uno stacco elegante tra la bottiglia e il bordo del cerchio */
     margin: 0 auto;
 }
 
-/* L'immagine si adatta e basta */
+/* L'immagine dentro il cerchio */
 .wine-thumb {
-    width: 100%;
-    height: 100%;
-    object-fit: contain; /* Fa vedere tutta la bottiglia */
-    /* NIENTE border-radius qui, ci pensa il contenitore sopra */
+    max-width: 100%;
+    max-height: 100%;
+    object-fit: contain; /* FONDAMENTALE: fa vedere TUTA la bottiglia senza tagliarla, aggiungendo spazi bianchi se serve */
+    background-color: transparent;
+    width: auto; /* Permette all'immagine di stringersi se la bottiglia è snella */
+    height: auto; /* Permette all'immagine di abbassarsi se la bottiglia è tozza */
 }
 /* --- COLORI DORATI E SALUTO --- */
 
