@@ -95,6 +95,8 @@
       $destinazione = $cartella . $nome_file;
 
       // Sposta il file dal deposito temporaneo (dove PHP salva i file uploadati) alla cartella finale
+      // Se il file esiste già, move_uploaded_file()
+      // semplicemente lo sostituisce (quindi ok per l'aggiornamento).
       if (move_uploaded_file($file_php['tmp_name'], $destinazione)) {
           return "uploads/vini/user_" . $id_utente . "/vino_" . $id_vino . "/" . $nome_file;
       }

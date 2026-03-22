@@ -20,7 +20,7 @@
 
   if ($id_vino) {
       // Vino Model si occupa di cancellare sia il file che la riga DB
-      $res = cancellazioneVino($conn, $id_vino, $id_utente);
+      $res = cancellaVino($conn, $id_vino, $id_utente);
 
       if ($res) {
           $_SESSION['messaggio'] = "Vino rimosso correttamente.";

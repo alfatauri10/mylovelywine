@@ -30,6 +30,5 @@
     <body>
         <?php include 'view/listaViniVetrina.php'; ?>
         <?php include 'include/footer.php'; ?>
-
     </body>
 </html>

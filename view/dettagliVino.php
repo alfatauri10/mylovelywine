@@ -28,12 +28,10 @@
             <?php if (isset($mostraAzioni) && $mostraAzioni): ?>
                 <div class="wine-actions" style="margin-top: 10px; display: flex; flex-direction: column; gap: 5px;">
 
-                    <!--
                     <a href="modificaVino.php?id=<?php echo $vino['id']; ?>"
                        style="color: #a67c52; text-decoration: none; font-size: 0.65rem; font-weight: 500; text-transform: uppercase; border: 1px solid #eeeae3; padding: 4px 8px; text-align: center;">
                         Modifica
                     </a>
-                    -->
 
                     <a href="cancellaVino.php?id=<?php echo $vino['id']; ?>&nome=<?php echo urlencode($vino['nome_vino']); ?>"
                        style="color: #d9534f; text-decoration: none; font-size: 0.65rem; font-weight: 500; text-transform: uppercase; border: 1px solid #f8d7da; padding: 4px 8px; text-align: center;">
