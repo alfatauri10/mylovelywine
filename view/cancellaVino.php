@@ -38,9 +38,12 @@
 
                 <h1 style="font-weight: 500; letter-spacing: 5px; text-transform: uppercase; color: #2d1b10; margin-bottom: 10px; display: flex; align-items: center; justify-content: center; gap: 0;">
                     Elimina Vino
-                    <svg width="50" height="50" viewBox="0 0 24 24" fill="none" stroke="#d9534f" stroke-width="1.2" stroke-linecap="round" stroke-linejoin="round">
-                        <polyline points="3 6 5 6 21 6"></polyline>
-                        <path d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6m3 0V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"></path>
+                    <svg class="icon-bottiglia-eliminazione" width="58" height="58" viewBox="0 0 24 24" fill="none" stroke="#d9534f" stroke-width="1.2" stroke-linecap="round" stroke-linejoin="round">
+                        <path d="M10 2h4M11 2v4.5c0 1.5-1 2.5-2 3.5S7 12 7 15v4c0 1.5 1 3 2.5 3h5c1.5 0 2.5-1.5 2.5-3v-4c0-3-1-4-2-5s-2-2-2-3.5V2"></path>
+                        <path d="M14 11.5c1 1.5 1.5 3 1.5 5.5" stroke-width="0.8" opacity="0.5"></path>
+
+                        <line x1="8" y1="12" x2="16" y2="20" stroke-width="2"></line>
+                        <line x1="16" y1="12" x2="8" y2="20" stroke-width="2"></line>
                     </svg>
                 </h1>
                 <p class="login-subtitle" style="margin-bottom: 25px;">Sei sicuro di voler procedere?</p>
