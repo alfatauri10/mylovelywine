@@ -17,8 +17,8 @@
 
     if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
-        $id_utente = $_SESSION['id_utente'];
-        $id_vino   = filter_input(INPUT_POST, 'id_vino', FILTER_SANITIZE_NUMBER_INT);
+        $id_utente = $_SESSION['user_id'];
+        $id_vino   = $_POST['id_vino'] ?? '';
 
         // 2. Recupero e Sanificazione dati testuali
         $nome = $_POST['nome_vino'] ?? '';

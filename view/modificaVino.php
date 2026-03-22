@@ -62,7 +62,7 @@ unset($_SESSION['errore']);
 
             <div class="form-group text-start">
                 <label class="form-label-custom">Nome del Vino</label>
-                <input type="text" name="nome" class="form-control-custom" value="<?php echo htmlspecialchars($vino['nome_vino']); ?>" required>
+                <input type="text" name="nome_vino" class="form-control-custom" value="<?php echo htmlspecialchars($vino['nome_vino']); ?>" required>
             </div>
 
             <div class="form-group text-start">

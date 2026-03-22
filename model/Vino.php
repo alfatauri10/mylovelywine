@@ -82,6 +82,7 @@
      * Richiamata da modificaVinoController
      *
     */
+
     function modificaVino($conn, $id_vino, $id_utente, $nome, $cantina, $anno, $prezzo, $file_copertina_php, $galleria_nuova_php, $foto_da_eliminare = [], $foto_da_sostituire_php = []) {
 
         if (!isVinoDellUtenteDB($conn, $id_vino, $id_utente)) {
