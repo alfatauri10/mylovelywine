@@ -27,7 +27,7 @@
                 </span>
 
                 <?php if ($currentFile == 'index.php'): ?>
-                    <a href="view/listaVini.php" class="nav-link">Cantina</a>
+                    <a href="view/listaViniUtente.php" class="nav-link">Cantina</a>
                 <?php else: ?>
                     <a href="<?php echo $root; ?>index.php" class="nav-link">Vetrina</a>
                 <?php endif; ?>
