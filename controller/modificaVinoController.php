@@ -21,23 +21,13 @@
         $id_vino   = filter_input(INPUT_POST, 'id_vino', FILTER_SANITIZE_NUMBER_INT);
 
         // 2. Recupero e Sanificazione dati testuali
-        $nome    = filter_input(INPUT_POST, 'nome', FILTER_SANITIZE_SPECIAL_CHARS);
-        $cantina = filter_input(INPUT_POST, 'cantina', FILTER_SANITIZE_SPECIAL_CHARS);
-        $anno    = filter_input(INPUT_POST, 'anno', FILTER_SANITIZE_NUMBER_INT);
-        $prezzo  = filter_input(INPUT_POST, 'prezzo', FILTER_SANITIZE_NUMBER_FLOAT, FILTER_FLAG_ALLOW_FRACTION);
-
-        // 3. Recupero File e Array dalla View
-
-        // Copertina singola
+        $nome = $_POST['nome_vino'] ?? '';
+        $cantina = $_POST['cantina'] ?? '';
+        $anno = $_POST['anno'] ?? '';
+        $prezzo = $_POST['prezzo'] ?? '';
         $file_copertina = (isset($_FILES['copertina']) && $_FILES['copertina']['error'] !== UPLOAD_ERR_NO_FILE) ? $_FILES['copertina'] : null;
-
-        // Nuove foto per la galleria (campo multiplo)
         $nuova_galleria = (isset($_FILES['nuova_galleria']) && $_FILES['nuova_galleria']['error'][0] !== UPLOAD_ERR_NO_FILE) ? $_FILES['nuova_galleria'] : null;
-
-        // Foto della galleria da ELIMINARE (array di ID dalle checkbox)
         $foto_da_eliminare = $_POST['elimina_foto'] ?? [];
-
-        // Foto della galleria da SOSTITUIRE (array di file indicizzati per ID)
         $foto_da_sostituire = (isset($_FILES['sostituisci_foto'])) ? $_FILES['sostituisci_foto'] : [];
 
         // 4. Chiamata alla UNICA funzione del Model
@@ -59,13 +49,19 @@
         // 5. Gestione Risposta
         if ($esito) {
             // Se tutto è andato bene, svuotiamo eventuali errori vecchi e andiamo al dettaglio
-            unset($_SESSION['errore']);
-            header("Location: ../view/dettaglioVino.php?id=$id_vino&msg=updated");
+            $_SESSION['messaggio'] = "Vino modificato con successo!";
+            header("Location: ../view/listaViniUtente.php"); // Redirect al SUCCESSO
+            exit(); // FERMA TUTTO QUI
         } else {
-            // Se c'è stato un errore (gestito nel try-catch del model), $_SESSION['errore'] è già piena
+            // Se il Model non ha già impostato un errore specifico (es. nel catch), mettiamo quello generico
+            if (!isset($_SESSION['errore'])) {
+                $_SESSION['errore'] = "Errore durante la modifica (Errore Generico).";
+            }
             header("Location: ../view/modificaVino.php?id=$id_vino");
+            exit();
+
         }
-        exit();
+
 
     } else {
         // Se si tenta un accesso GET diretto al controller senza passare dalla view

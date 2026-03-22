@@ -57,6 +57,7 @@ unset($_SESSION['errore']);
         <?php endif; ?>
 
         <form action="../controller/modificaVinoController.php" method="POST" enctype="multipart/form-data">
+
             <input type="hidden" name="id_vino" value="<?php echo $vino['id']; ?>">
 
             <div class="form-group text-start">
