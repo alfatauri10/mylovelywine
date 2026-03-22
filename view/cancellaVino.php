@@ -61,7 +61,7 @@
                 <form action="../controller/cancellaVinoController.php" method="GET">
                     <input type="hidden" name="id" value="<?php echo $id_vino; ?>">
 
-                    <button type="submit" class="btn-login-action" style="background-color: #d9534f; border-color: #d43f3a;">
+                    <button type="submit" class="btn-login-action">
                         Sì, elimina dalla cantina
                     </button>
                 </form>

@@ -1,14 +1,16 @@
 <?php
-session_start();
-if (!isset($_SESSION['user_id'])) {
-    header("Location: login.php");
-    exit();
-}
+    session_start();
 
-// 1. Leggi l'errore dalla SESSIONE (non dall'URL)
-$error = $_SESSION['errore'] ?? null;
-// 2. IMPORTANTE: Cancella l'errore dopo averlo letto, così non riappare al prossimo refresh
-unset($_SESSION['errore']); 
+    // 1. Controllo se l'utente è loggato
+    if (!isset($_SESSION['user_id'])) {
+        header("Location: login.php");
+        exit();
+    }
+
+    // 1. Leggi l'errore dalla SESSIONE (non dall'URL)
+    $error = $_SESSION['errore'] ?? null;
+    // 2. IMPORTANTE: Cancella l'errore dopo averlo letto, così non riappare al prossimo refresh
+    unset($_SESSION['errore']);
 ?>
 
 <!DOCTYPE html>
