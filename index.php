@@ -29,7 +29,7 @@
     </head>
     <body>
         <?php include 'view/listaViniVetrina.php'; ?>
-        <?php include 'include/header.php'; ?>
+        <?php include 'include/footer.php'; ?>
 
     </body>
 </html>
