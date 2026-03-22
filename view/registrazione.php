@@ -13,7 +13,7 @@
     <body class="body-login"> <div class="container d-flex justify-content-center align-items-center vh-100" style="padding-top: 50px; padding-bottom: 50px;">
              <div class="container-form text-center">
                 <h1 style="font-weight: 500; letter-spacing: 5px; text-transform: uppercase; color: #2d1b10; margin-bottom: 10px; display: flex; align-items: center; justify-content: center;">
-                    Unisciti al Club
+                    Registrati
                     <svg class="icon-calice" width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
                         <path d="M8 22h8"></path>
                         <path d="M12 11V22"></path>

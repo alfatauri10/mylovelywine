@@ -42,7 +42,7 @@
                 </form>
 
                 <div class="mt-4">
-                    <p class="login-footer-text">
+                    <p class="small text-uppercase" style="letter-spacing: 1px; font-weight: 500; color: #2d1b10;">
                         Non sei ancora dei nostri?
                         <a href="registrazione.php" class="gold-link">Unisciti al Club</a>
                     </p>
