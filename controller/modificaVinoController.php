@@ -1,60 +1,68 @@
 <?php
     session_start();
-    // CARICAMENTO MODELLI E CONNESSIONE (Solo qui!)
     require_once '../model/connessione.php';
     require_once '../model/Vino.php';
 
-    // 1. Controllo Sicurezza
+    // 1. Controllo Sicurezza Sessione
     if (!isset($_SESSION['id_utente'])) {
-        header("Location: login.php");
+        header("Location: ../view/login.php");
         exit();
     }
 
-    $id_utente = $_SESSION['id_utente'];
-
-    // --- LOGICA DI CARICAMENTO (GET) ---
-    if ($_SERVER['REQUEST_METHOD'] === 'GET') {
-
-        $id_vino = filter_input(INPUT_GET, 'id', FILTER_SANITIZE_NUMBER_INT);
-
-        if (!$id_vino) {
-            header("Location: listaViniUtente.php");
-            exit();
-        }
-
-        // Recupero i dati: la variabile $vino sarà "vista" dalla View inclusa sotto
-        $vino = getVinoByIdDB($conn, $id_vino, $id_utente);
-
-        if (!$vino) {
-            $_SESSION['errore'] = "Vino non trovato o permessi insufficienti.";
-            header("Location: listaViniUtente.php");
-            exit();
-        }
-
-        // Richiamo la View: non serve ri-caricare connessione o modelli nella View
-        include '../view/modificaVinoView.php';
-        exit();
-    }
-
-    // --- LOGICA DI SALVATAGGIO (POST) ---
     if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
-        $id_vino = filter_input(INPUT_POST, 'id_vino', FILTER_SANITIZE_NUMBER_INT);
+        $id_utente = $_SESSION['id_utente'];
+        $id_vino   = filter_input(INPUT_POST, 'id_vino', FILTER_SANITIZE_NUMBER_INT);
+
+        // 2. Recupero e Sanificazione dati testuali
         $nome    = filter_input(INPUT_POST, 'nome', FILTER_SANITIZE_SPECIAL_CHARS);
         $cantina = filter_input(INPUT_POST, 'cantina', FILTER_SANITIZE_SPECIAL_CHARS);
         $anno    = filter_input(INPUT_POST, 'anno', FILTER_SANITIZE_NUMBER_INT);
         $prezzo  = filter_input(INPUT_POST, 'prezzo', FILTER_SANITIZE_NUMBER_FLOAT, FILTER_FLAG_ALLOW_FRACTION);
 
+        // 3. Recupero File e Array dalla View
+
+        // Copertina singola
         $file_copertina = (isset($_FILES['copertina']) && $_FILES['copertina']['error'] !== UPLOAD_ERR_NO_FILE) ? $_FILES['copertina'] : null;
-        $files_galleria = (isset($_FILES['galleria']) && $_FILES['galleria']['error'][0] !== UPLOAD_ERR_NO_FILE) ? $_FILES['galleria'] : null;
 
-        $esito = modificaVino($conn, $id_vino, $id_utente, $nome, $cantina, $anno, $prezzo, $file_copertina, $files_galleria);
+        // Nuove foto per la galleria (campo multiplo)
+        $nuova_galleria = (isset($_FILES['nuova_galleria']) && $_FILES['nuova_galleria']['error'][0] !== UPLOAD_ERR_NO_FILE) ? $_FILES['nuova_galleria'] : null;
 
+        // Foto della galleria da ELIMINARE (array di ID dalle checkbox)
+        $foto_da_eliminare = $_POST['elimina_foto'] ?? [];
+
+        // Foto della galleria da SOSTITUIRE (array di file indicizzati per ID)
+        $foto_da_sostituire = (isset($_FILES['sostituisci_foto'])) ? $_FILES['sostituisci_foto'] : [];
+
+        // 4. Chiamata alla UNICA funzione del Model
+        // Questa funzione gestisce internamente Transazione, Upload, Delete e Update
+        $esito = modificaVino(
+            $conn,
+            $id_vino,
+            $id_utente,
+            $nome,
+            $cantina,
+            $anno,
+            $prezzo,
+            $file_copertina,
+            $nuova_galleria,
+            $foto_da_eliminare,
+            $foto_da_sostituire
+        );
+
+        // 5. Gestione Risposta
         if ($esito) {
+            // Se tutto è andato bene, svuotiamo eventuali errori vecchi e andiamo al dettaglio
+            unset($_SESSION['errore']);
             header("Location: ../view/dettaglioVino.php?id=$id_vino&msg=updated");
         } else {
-            $_SESSION['errore'] = "Errore durante il salvataggio.";
-            header("Location: modificaVinoController.php?id=$id_vino");
+            // Se c'è stato un errore (gestito nel try-catch del model), $_SESSION['errore'] è già piena
+            header("Location: ../view/modificaVino.php?id=$id_vino");
         }
+        exit();
+
+    } else {
+        // Se si tenta un accesso GET diretto al controller senza passare dalla view
+        header("Location: ../view/listaViniUtente.php");
         exit();
     }

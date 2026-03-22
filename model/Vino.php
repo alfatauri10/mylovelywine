@@ -82,72 +82,75 @@
      * Richiamata da modificaVinoController
      *
     */
-    function modificaVino($conn, $id_vino, $id_utente, $nome, $cantina, $anno, $prezzo, $file_copertina_php, $galleria_vino_files_php) {
+    function modificaVino($conn, $id_vino, $id_utente, $nome, $cantina, $anno, $prezzo, $file_copertina_php, $galleria_nuova_php, $foto_da_eliminare = [], $foto_da_sostituire_php = []) {
 
-        // --- IL CONTROLLO DI SICUREZZA ---
-        // Verifichiamo PRIMA DI TUTTO se l'utente ha il permesso di cancellare QUESTO vino
         if (!isVinoDellUtenteDB($conn, $id_vino, $id_utente)) {
-            // Se non è suo, interrompiamo tutto
             return false;
         }
 
-        // 1. Inizio Transazione
         $conn->autocommit(FALSE);
         $conn->begin_transaction();
 
         try {
-            // 2. Aggiornamento dati vino
-            $sql = "UPDATE vini SET nome_vino = ?, cantina = ?, anno = ?, prezzo = ? 
-                        WHERE id = ? AND user_id = ?";
-
+            // 1. Aggiornamento dati testuali (Nota: tabella vini_utenti come da tuo getVinoByIdDB)
+            $sql = "UPDATE vini_utenti SET nome_vino = ?, cantina = ?, anno = ?, prezzo = ? 
+                    WHERE id = ? AND id_utente = ?";
             $stmt = $conn->prepare($sql);
             $stmt->bind_param("ssidii", $nome, $cantina, $anno, $prezzo, $id_vino, $id_utente);
-            $successo = $stmt->execute();
-
-            if (!$successo)
-                return false;
+            if (!$stmt->execute()) throw new Exception("Errore aggiornamento dati base");
 
             $tipo_url = getTipoSalvataggioFromSessione($conn);
 
-            // 3. Aggiorna Nuova Copertina (se l'utente ha caricato un file)
+            // 2. Aggiorna Copertina (se caricata)
             if ($file_copertina_php && $file_copertina_php['error'] === UPLOAD_ERR_OK) {
-
-                //3.1 aggiorno sul server
-                uploadFile($tipo_url, $file_copertina_php, $id_utente, $id_vino, true);
+                // Eliminiamo la vecchia prima? Opzionale ma consigliato
+                $vecchia = getURLImmagineCopertinaDB($conn, $id_vino, $id_utente);
+                if ($vecchia) eliminaFile($vecchia['tipo_url'], $vecchia['urlCopertina']);
 
                 $nuovo_path = uploadFile($tipo_url, $file_copertina_php, $id_utente, $id_vino, true);
-
                 if ($nuovo_path) {
-                    //3.2 aggiorno path sul DB (l'estensione potrebbe essere cambiata (da .jpg a .png))
-                    $sql_foto = "UPDATE vini SET urlCopertina = ? WHERE id = ?";
-                    $stmt_f = $conn->prepare($sql_foto);
-                    $stmt_f->bind_param("si", $nuovo_path, $id_vino);
-                    $stmt_f->execute();
+                    insertCopertinaVinoDB($conn, $nuovo_path, $tipo_url, $id_utente, $id_vino);
                 }
             }
 
-            // 4. Gestione Galleria
-            if (!empty($galleria_vino_files_php['name'][0])) {
-                $successoGalleria = aggiungiGalleriaVino($conn, $id_utente, $id_vino, $galleria_vino_files_php, $tipo_url);
-
-                if (!$successoGalleria) {
-                    throw new Exception("Errore durante il caricamento della galleria");
+            // 3. Eliminazione singole foto galleria
+            if (!empty($foto_da_eliminare)) {
+                foreach ($foto_da_eliminare as $id_foto) {
+                    eliminaSingolaFotoGalleria($conn, $id_foto, $id_vino);
                 }
             }
-            // 5. Se siamo arrivati qui, tutto è andato bene
+
+            // 4. Sostituzione singole foto galleria
+            if (!empty($foto_da_sostituire_php['name'])) {
+                foreach ($foto_da_sostituire_php['name'] as $id_foto => $name) {
+                    if ($foto_da_sostituire_php['error'][$id_foto] === UPLOAD_ERR_OK) {
+                        $file_tmp = [
+                            'name' => $foto_da_sostituire_php['name'][$id_foto],
+                            'tmp_name' => $foto_da_sostituire_php['tmp_name'][$id_foto],
+                            'size' => $foto_da_sostituire_php['size'][$id_foto],
+                            'error' => $foto_da_sostituire_php['error'][$id_foto]
+                        ];
+                        // Elimina vecchia e carica nuova
+                        eliminaSingolaFotoGalleria($conn, $id_foto, $id_vino);
+                        $urlFoto = uploadFile($tipo_url, $file_tmp, $id_utente, $id_vino, false);
+                        if ($urlFoto) insertGalleriaVinoDB($conn, $urlFoto, $tipo_url, $id_vino);
+                    }
+                }
+            }
+
+            // 5. Aggiunta nuove foto alla galleria
+            if (!empty($galleria_nuova_php['name'][0])) {
+                aggiungiGalleriaVino($conn, $id_utente, $id_vino, $galleria_nuova_php, $tipo_url);
+            }
+
             $conn->commit();
             $conn->autocommit(TRUE);
-            return $id_vino;
+            return true;
 
         } catch (Exception $e) {
-            // 6. Qualcosa è fallito: annulliamo tutte le modifiche al DB
             $conn->rollback();
             $conn->autocommit(TRUE);
-
-            // Log dell'errore (opzionale)
-            error_log("Errore modificaVino: " . $e->getMessage());
-            $_SESSION['errore'] = "DEBUG: " . $e->getMessage();
-
+            $_SESSION['errore'] = $e->getMessage();
             return false;
         }
     }
@@ -227,6 +230,7 @@
 
     /**
      * Recupera un singolo vino per ID con i campi espliciti
+     * Richiamata da modificaVino.php
      */
     function getVinoByIdDB($conn, $id_vino, $id_utente) {
 
@@ -394,6 +398,39 @@
         return $result->fetch_all(MYSQLI_ASSOC);
     }
 
+    /**
+     * Elimina una singola foto della galleria (file + DB)
+     * Richiamata da modificaVino()
+     */
+    function eliminaSingolaFotoGalleria($conn, $id_foto, $id_vino) {
+        // 1. Prendi URL per cancellare il file
+        $sql = "SELECT url, tipo_url FROM immagini_vini WHERE id = ? AND id_vino = ?";
+        $stmt = $conn->prepare($sql);
+        $stmt->bind_param("ii", $id_foto, $id_vino);
+        $stmt->execute();
+        $foto = $stmt->get_result()->fetch_assoc();
+
+        if ($foto) {
+            eliminaFile($foto['tipo_url'], $foto['url']);
+            // 2. Cancella dal DB
+            $sql_del = "DELETE FROM immagini_vini WHERE id = ?";
+            $stmt_del = $conn->prepare($sql_del);
+            $stmt_del->bind_param("i", $id_foto);
+            $stmt_del->execute();
+        }
+    }
+
+    /**
+     * Recupera la galleria con anche l'ID della foto (necessario per modificare/eliminare)
+     * Richiamata da modificaVino()
+     */
+    function getGalleriaCompletaVinoDB($conn, $id_vino) {
+        $sql = "SELECT id, url, tipo_url FROM immagini_vini WHERE id_vino = ?";
+        $stmt = $conn->prepare($sql);
+        $stmt->bind_param("i", $id_vino);
+        $stmt->execute();
+        return $stmt->get_result()->fetch_all(MYSQLI_ASSOC);
+    }
   /* FINE - FUNZIONI INTERNE ACCESSO AL DB */
 
   /* INIZIO - FUNZIONI INTERNE DI UTILITA' */
