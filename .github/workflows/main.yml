@@ -23,4 +23,6 @@ jobs:
           port: 21
           security: 'loose'
           exclude: |
+            **/.idea/**
+            **/.git/**
             **/connessioneDB.php
