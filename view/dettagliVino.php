@@ -26,13 +26,14 @@
             <?php endif; ?>
 
             <div style="display: flex; gap: 10px; justify-content: flex-end; margin-top: 5px;">
-                <?php if (isset($mostraModifica) && $mostraModifica): ?>
+                <!--
+                // <?php if (isset($mostraModifica) && $mostraModifica): ?>
                     <a href="modificaVino.php?id=<?php echo $vino['id']; ?>"
                        style="color: #a67c52; text-decoration: none; font-size: 0.7rem; font-weight: 500; text-transform: uppercase; border: 1px solid #eeeae3; padding: 5px 10px; display: inline-block;">
                         Modifica
                     </a>
-                <?php endif; ?>
-
+                // <?php endif; ?>
+                -->
                 <?php if (isset($mostraElimina) && $mostraElimina): ?>
                 <!--
                     <a href="../controller/cancellaVinoController.php?id=<?php echo $vino['id']; ?>"
