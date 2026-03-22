@@ -1,0 +1,288 @@
+/* --- RESET E BASI --- */
+* { box-sizing: border-box; }
+
+body {
+    font-family: 'Montserrat', sans-serif !important;
+    background-color: #fdfaf6;
+    color: #2d1b10;
+    margin: 0;
+    padding: 0;
+}
+
+/* --- HEADER --- */
+.main-header {
+    background-color: #2d1b10 !important;
+    padding: 20px 0;
+    width: 100%;
+    box-shadow: 0 4px 12px rgba(0,0,0,0.15);
+}
+
+.header-content-wrapper {
+    max-width: 1100px;
+    margin: 0 auto;
+    padding: 0 20px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.logo {
+    font-weight: 500 !important;
+    letter-spacing: 4px;
+    text-transform: uppercase;
+    color: #fdfaf6 !important;
+    text-decoration: none;
+    font-size: 1.2rem;
+    display: flex;
+    align-items: center;
+}
+
+/* --- NAVIGAZIONE (Desktop e Base) --- */
+.auth-nav {
+    display: flex;
+    gap: 15px;
+    align-items: center;
+    flex-wrap: nowrap; /* Impedisce ai bottoni di dividersi */
+}
+
+.nav-link {
+    color: rgba(253, 250, 246, 0.75) !important;
+    text-decoration: none;
+    font-size: 0.85rem;
+    font-weight: 500 !important;
+    text-transform: uppercase;
+    letter-spacing: 2px;
+    white-space: nowrap; /* Non spezza il testo */
+}
+
+.nav-link:hover { color: #ffffff !important; }
+
+.btn-elegant {
+    border: 1px solid rgba(255,255,255,0.5);
+    color: #fff !important;
+    padding: 10px 18px;
+    text-decoration: none;
+    font-size: 0.8rem;
+    font-weight: 500 !important;
+    text-transform: uppercase;
+    letter-spacing: 2px;
+    transition: 0.3s;
+    white-space: nowrap; /* Evita tagli come su "Club" */
+}
+
+.btn-elegant:hover { background-color: #fff; color: #2d1b10 !important; }
+
+/* --- HERO SECTION --- */
+.hero-section { text-align: center; padding: 80px 20px 40px; }
+.hero-section h2 { font-weight: 500 !important; text-transform: uppercase; letter-spacing: 5px; font-size: 2.2rem; color: #2d1b10; margin-bottom: 15px; }
+.hero-section p { color: #a67c52; text-transform: uppercase; letter-spacing: 3px; font-size: 0.9rem; font-weight: 500 !important; }
+
+/* --- VETRINA --- */
+.vetrina-container { max-width: 950px; margin: 0 auto 60px; padding: 0 20px; }
+.wine-row { display: flex; align-items: center; background: #fff; padding: 35px; border-bottom: 1px solid #eeeae3; gap: 30px; transition: 0.3s; }
+.wine-row:hover { background-color: #fffcf9; }
+.wine-thumb { width: 80px; height: 130px; object-fit: contain; }
+.wine-info-main { flex-grow: 1; }
+.wine-info-main h3 { font-weight: 450 !important; text-transform: uppercase; letter-spacing: 2px; font-size: 1.25rem; margin: 0 0 5px 0; }
+.wine-info-main p { color: #8c8479; font-size: 1rem; margin: 0; font-style: italic; }
+.wine-info-meta { text-align: right; }
+.wine-info-meta b { display: block; color: #a67c52; font-weight: 500 !important; text-transform: uppercase; font-size: 0.85rem; letter-spacing: 1px; }
+.wine-info-meta span { color: #ccc; font-size: 0.75rem; text-transform: uppercase; }
+
+/* --- LOGIN / FORM --- */
+.body-login { background-color: #fdfaf6 !important; }
+.container-form { background: #ffffff; padding: 50px; border: 1px solid #eeeae3; max-width: 450px; width: 100%; margin: 30px auto; box-shadow: 0 15px 35px rgba(45, 27, 16, 0.05); }
+.form-label-custom { color: #a67c52; font-weight: 500; letter-spacing: 2px; font-size: 0.7rem; text-transform: uppercase; display: block; margin-bottom: 8px; }
+.form-control-custom { width: 100%; border: none !important; border-bottom: 2px solid #eeeae3 !important; border-radius: 0 !important; padding: 10px 0 !important; font-weight: 450; background: transparent !important; outline: none; margin-bottom: 25px; color: #2d1b10; }
+.form-control-custom:focus { border-color: #2d1b10 !important; }
+.btn-login-action { background-color: #2d1b10; color: #fdfaf6 !important; border: none; padding: 18px; width: 100%; text-transform: uppercase; letter-spacing: 3px; font-weight: 500; cursor: pointer; transition: 0.3s; }
+.btn-login-action:hover { background-color: #000; }
+
+/* --- ICONE --- */
+.icon-calice { margin-left: 5px; vertical-align: middle; stroke: #fdfaf6; }
+.container-form h1 .icon-calice { stroke: #2d1b10; width: 28px; height: 28px; }
+.icon-bottiglia-sinuosa { color: #2d1b10; transform: rotate(15deg); margin-left: -55px; transition: all 0.3s ease; display: inline-block; }
+
+/* --- FOOTER --- */
+footer { text-align: center; padding: 50px; color: #999; font-size: 0.75rem; text-transform: uppercase; letter-spacing: 2px; }
+
+/* --- FIX RESPONSIVE SMARTPHONE --- */
+@media (max-width: 768px) {
+    .header-content-wrapper {
+        flex-direction: column !important; /* Logo sopra */
+        gap: 15px !important;
+        padding: 15px 5px !important;
+    }
+
+    .auth-nav {
+        flex-wrap: wrap !important;
+        justify-content: center !important;
+        gap: 10px !important;
+        width: 100%;
+    }
+
+    /* Il saluto occupa il 100% e sta in mezzo tra logo e tasti */
+    .auth-nav span {
+        flex: 0 0 100% !important;
+        text-align: center !important;
+        margin-right: 0 !important;
+        margin-bottom: 5px !important;
+    }
+
+    /* I pulsanti rimangono affiancati */
+    .nav-link, .btn-elegant {
+        flex: 0 1 auto !important;
+        font-size: 0.7rem !important; /* Ridotto per farli stare su una riga */
+        padding: 8px 12px !important;
+        letter-spacing: 1px !important;
+        white-space: nowrap !important; /* MAI tagliare il testo */
+    }
+
+    .logo { font-size: 1.1rem !important; letter-spacing: 2px !important; }
+
+    /* Lista vini mobile */
+    .wine-row { flex-direction: column; text-align: center; padding: 20px; }
+    .wine-info-meta { text-align: center; margin-top: 10px; }
+}
+
+.user-welcome {
+    color: #fdfaf6 !important;
+    font-size: 0.8rem;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    margin-right: 15px;
+    display: inline-block; /* Fondamentale per la visibilità */
+}
+
+.user-welcome b {
+    font-weight: 500;
+    color: #ffffff !important;
+}
+
+/* --- COLORI DORATI E SALUTO --- */
+
+/* --- inizio galleria lista vini -- */
+/* --- CONTENITORE RIGA VINO --- */
+.wine-row {
+    background: #fff;
+    border-bottom: 1px solid #f2f0eb;
+    padding: 25px 0;
+    display: flex;
+    flex-direction: column;
+}
+
+/* --- RIGA 1: HEADER (Foto + Info + Meta) --- */
+.wine-header {
+    display: flex;
+    align-items: center;
+    gap: 20px;
+    width: 100%;
+}
+
+/* Foto Copertina Tonda */
+.wine-thumb {
+    width: 75px;
+    height: 75px;
+    object-fit: cover;
+    border-radius: 50%;
+    border: 1px solid #f0efeb;
+    flex-shrink: 0;
+}
+
+/* Blocco Centrale (Nome e Cantina) */
+.wine-info-main {
+    flex-grow: 1;
+}
+
+.wine-info-main h3 {
+    margin: 0;
+    font-size: 1.15rem;
+    color: #2d1b10;
+    font-weight: 500;
+}
+
+.wine-subtitle {
+    margin: 1px 0;
+    color: #a67c52;
+    font-size: 0.9rem;
+}
+
+/* Specifiche Annata e Prezzo (Delicate) */
+.wine-specs-minimal {
+    font-size: 0.75rem;
+    color: #b5b0a8;
+    font-weight: 300;
+    margin-top: 4px;
+}
+
+.dot-sep {
+    margin: 0 6px;
+    color: #e0ddd7;
+}
+
+/* --- Blocco Autore e Data (A DESTRA CON MARGINE) --- */
+.wine-info-meta {
+    text-align: right;
+    min-width: 100px;
+    flex-shrink: 0;
+    padding-right: 15px; /* Margine dal bordo destro aggiunto qui */
+}
+
+.wine-info-meta b {
+    display: block;
+    font-size: 0.8rem;
+    /* Colore autore: un marrone testa di moro, più chic del nero */
+    color: #4a3728;
+}
+
+.wine-info-meta span {
+    font-size: 0.7rem;
+    color: #ccc;
+}
+
+/* --- RIGA 2: DETTAGLI (Sotto e a Sinistra) --- */
+.wine-footer-details {
+    width: 100%;
+    text-align: left;
+    margin-top: 12px;
+    padding-left: 10px; /* Margine dal bordo sinistro */
+}
+
+.wine-details summary {
+    font-size: 0.65rem;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    color: #a67c52;
+    cursor: pointer;
+    opacity: 0.8;
+    outline: none;
+}
+
+/* --- GALLERY INTERNA --- */
+.gallery-story {
+    padding-top: 15px;
+    text-align: left;
+}
+
+.story-step {
+    display: flex;
+    gap: 15px;
+    margin-bottom: 20px;
+    align-items: flex-start;
+}
+
+.step-img {
+    width: 90px;
+    height: 90px;
+    object-fit: cover;
+    border-radius: 3px;
+    border: 1px solid #f2f0eb;
+}
+
+.step-content p {
+    font-size: 0.8rem;
+    color: #777;
+    line-height: 1.4;
+    margin: 0;
+}
+/* --- fine galleria lista vini -- */
