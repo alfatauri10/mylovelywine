@@ -41,7 +41,10 @@
                         Elimina
                     </a>
                 -->
-                    <?php include 'cancellaVino.php'; ?>
+                    <a href="cancellaVino.php?id=<?php echo $vino['id']; ?>&nome=<?php echo urlencode($vino['nome_vino']); ?>"
+                       style="color: #a67c52; text-decoration: none; font-size: 0.7rem; font-weight: 500; text-transform: uppercase; border: 1px solid #eeeae3; padding: 5px 10px; display: inline-block;">
+                        Elimina
+                    </a>
                 <?php endif; ?>
             </div>
         </div>
