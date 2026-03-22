@@ -389,7 +389,7 @@
      * Richiamata da Vino.eliminaGalleriaVino())
      */
     function getGalleriaVinoDB($conn, $id_vino) {
-        $sql = "SELECT url_foto, tipo_url FROM immagini_vini WHERE id_vino = ?";
+        $sql = "SELECT url, tipo_url FROM immagini_vini WHERE id_vino = ?";
         $stmt = $conn->prepare($sql);
         $stmt->bind_param("i", $id_vino);
         $stmt->execute();
