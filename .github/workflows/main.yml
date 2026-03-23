@@ -25,4 +25,3 @@ jobs:
           exclude: |
             **/.idea/**
             **/.git/**
-            **/connessioneDB.php
