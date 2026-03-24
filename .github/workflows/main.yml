@@ -22,3 +22,7 @@ jobs:
           protocol: 'ftp'
           port: 21
           security: 'loose'
+          exclude: |
+            **/.idea/**
+            **/.git/**
+            **/.github/**
