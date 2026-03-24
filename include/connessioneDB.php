@@ -1,27 +1,22 @@
 <?php
-$conn = mysqli_connect("localhost","root","","my_vmartucci");
+    //$conn = mysqli_connect("localhost","root","","my_vmartucci");
 
-if(!$conn){
-    die("Connessione fallitaa: " . mysqli_connect_error());
-}
-?>
-//    <?php
-//    // include/connessioneDB.php
-//    $host = "localhost";
-//    $username = "vmartucci"; // <--- INSERISCI QUI IL TUO NOME UTENTE ALTERVISTA = nomeprogetto
-//    $password = "";            // <--- SU ALTERVISTA LASCIA VUOTO (o metti la pass del pannello se l'hai cambiata)
-//    $database = "my_vmartucci"; // <--- SCRIVI my_ SEGUITO DAL TUO NOME UTENTE
-//
-//    // Creiamo la connessione
-//    $conn = new mysqli($host, $username, $password, $database);
-//
-//    // Verifichiamo se ci sono errori
-//    if ($conn->connect_error) {
-//        die("Errore di connessione al database: " . $conn->connect_error);
-//    } else{
-//        // echo "Connessione al database avvenuta con successo!"; //da eliminare. Per DEBUG
-//    }
-//
-//    // Impostiamo la codifica caratteri corretta
-//    $conn->set_charset("utf8");
-//?>
+
+    $host = "mylovelywine-db-mylovelywine.a.aivencloud.com";
+    $user = "avnadmin";
+    $pass = "AVNS_GmH8d95xhk-qpUwYaB8"; // Verifica che sia corretta
+    $db = "defaultdb";
+    $port = 11228;
+
+    // 1. Inizializza mysqli
+    $conn = mysqli_init();
+
+    // 2. Se hai scaricato il certificato CA da Aiven (consigliato), indicalo qui.
+    // Se vuoi solo forzare l'SSL senza verificare il certificato:
+    mysqli_ssl_set($conn, NULL, NULL, NULL, NULL, NULL);
+
+    // 3. Tenta la connessione includendo la porta
+    if (!mysqli_real_connect($conn, $host, $user, $pass, $db, $port, NULL, MYSQLI_CLIENT_SSL)) {
+        die("Errore di connessione: " . mysqli_connect_error());
+    }
+
