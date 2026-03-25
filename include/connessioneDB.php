@@ -7,19 +7,27 @@
     $db = "defaultdb";
     $port = 11228;
 
-    // 1. Inizializza mysqli
     $conn = mysqli_init();
 
-    // 2. Se hai scaricato il certificato CA da Aiven (consigliato), indicalo qui.
-    // Se vuoi solo forzare l'SSL senza verificare il certificato:
-    mysqli_ssl_set($conn, NULL, NULL, NULL, NULL, NULL);
+    // Specifichiamo il percorso del file ca.pem che hai appena caricato
+    $ca_cert = __DIR__ . "/ca.pem";
 
-    // 3. Tenta la connessione includendo la porta
-//    if (!mysqli_real_connect($conn, $host, $user, $pass, $db, $port, NULL, MYSQLI_CLIENT_SSL)) {
-//        die("Errore di connessione: " . mysqli_connect_error());
-//    }
+    // Impostiamo l'SSL usando il file certificato
+    mysqli_ssl_set($conn, NULL, NULL, $ca_cert, NULL, NULL);
 
-// Prova a forzare la connessione senza verificare il file fisico
-if (!mysqli_real_connect($conn, $host, $user, $pass, $db, $port, NULL, MYSQLI_CLIENT_SSL_DONT_VERIFY_SERVER_CERT)) {
-    die("Errore di connessione: " . mysqli_connect_error());
-}
+    // Connessione
+    $success = mysqli_real_connect(
+        $conn,
+        $host,
+        $user,
+        $pass,
+        $db,
+        $port,
+        NULL,
+        MYSQLI_CLIENT_SSL
+    );
+
+    if (!$success) {
+        die("Errore di connessione: " . mysqli_connect_error());
+    }
+?>
