@@ -10,14 +10,10 @@
     $conn = mysqli_init();
 
     // Specifichiamo il percorso del file ca.pem che hai appena caricato
-    $ca_cert = __DIR__ . "/ca.pem";
-
-    if (!file_exists($ca_cert)) {
-        die("Errore fatale: Il file ca.pem non esiste in: " . $ca_cert);
-    }
+    //$ca_cert = __DIR__ . "/ca.pem";
 
     // Impostiamo l'SSL usando il file certificato
-    mysqli_ssl_set($conn, NULL, NULL, $ca_cert, NULL, NULL);
+   /* mysqli_ssl_set($conn, NULL, NULL, $ca_cert, NULL, NULL);
 
     // Connessione
     $success = mysqli_real_connect(
@@ -30,8 +26,22 @@
         NULL,
         MYSQLI_CLIENT_SSL
     );
+*/
+       // Non usare mysqli_ssl_set qui se continua a darti errore
+
+    $success = mysqli_real_connect(
+        $conn,
+        $host,
+        $user,
+        $pass,
+        $db,
+        $port,
+        NULL,
+        MYSQLI_CLIENT_SSL | MYSQLI_CLIENT_SSL_DONT_VERIFY_SERVER_CERT
+    );
 
     if (!$success) {
         die("Errore di connessione: " . mysqli_connect_error());
     }
+
 ?>
