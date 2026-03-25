@@ -15,7 +15,11 @@
     mysqli_ssl_set($conn, NULL, NULL, NULL, NULL, NULL);
 
     // 3. Tenta la connessione includendo la porta
-    if (!mysqli_real_connect($conn, $host, $user, $pass, $db, $port, NULL, MYSQLI_CLIENT_SSL)) {
-        die("Errore di connessione: " . mysqli_connect_error());
-    }
+//    if (!mysqli_real_connect($conn, $host, $user, $pass, $db, $port, NULL, MYSQLI_CLIENT_SSL)) {
+//        die("Errore di connessione: " . mysqli_connect_error());
+//    }
 
+// Prova a forzare la connessione senza verificare il file fisico
+if (!mysqli_real_connect($conn, $host, $user, $pass, $db, $port, NULL, MYSQLI_CLIENT_SSL_DONT_VERIFY_SERVER_CERT)) {
+    die("Errore di connessione: " . mysqli_connect_error());
+}
