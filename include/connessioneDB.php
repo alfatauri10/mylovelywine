@@ -12,6 +12,10 @@
     // Specifichiamo il percorso del file ca.pem che hai appena caricato
     $ca_cert = __DIR__ . "/ca.pem";
 
+    if (!file_exists($ca_cert)) {
+        die("Errore fatale: Il file ca.pem non esiste in: " . $ca_cert);
+    }
+
     // Impostiamo l'SSL usando il file certificato
     mysqli_ssl_set($conn, NULL, NULL, $ca_cert, NULL, NULL);
 
